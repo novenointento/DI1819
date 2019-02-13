@@ -114,8 +114,8 @@ public class GestorPrincipal {
      */
     public void grabarColeccionCorredoresAcsv() {
         gestorFicheroCsv.abrirEscritor();
-        for (Corredor corredores : corredores.values()) {
-            gestorFicheroCsv.println(destokenizarCorredores(corredores));
+        for (Corredor corredor : corredores.values()) {
+            gestorFicheroCsv.println(destokenizarCorredores(corredor));
         }
         gestorFicheroCsv.cerrarEscritor();
     }

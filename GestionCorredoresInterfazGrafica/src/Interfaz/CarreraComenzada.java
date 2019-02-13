@@ -33,7 +33,7 @@ public class CarreraComenzada extends javax.swing.JDialog {
     /**
      * Creates new form CarreraComenzada
      */
-    public CarreraComenzada(VisualizadorCarreras parent, boolean modal, Carrera carrera) {
+    public CarreraComenzada(final VisualizadorCarreras parent, boolean modal, final Carrera carrera) {
         super(parent, modal);
         initComponents();
         ponlaAyuda();
