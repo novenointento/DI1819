@@ -85,6 +85,7 @@ public class MainPantallaPrincipalCorredor extends javax.swing.JFrame {
         jButtonCrearCorredor = new javax.swing.JButton();
         jButtonVerCarreras = new javax.swing.JButton();
         jButtonVerCorredores = new javax.swing.JButton();
+        jButtonInformes = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuPrincipal = new javax.swing.JMenu();
         jMenuItemAltaCorredor = new javax.swing.JMenuItem();
@@ -130,6 +131,13 @@ public class MainPantallaPrincipalCorredor extends javax.swing.JFrame {
         jButtonVerCorredores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVerCorredoresActionPerformed(evt);
+            }
+        });
+
+        jButtonInformes.setText("Informes");
+        jButtonInformes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInformesActionPerformed(evt);
             }
         });
 
@@ -191,35 +199,37 @@ public class MainPantallaPrincipalCorredor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jButtonCrearCorredor)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonCrearCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonVerCorredores)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelIcono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonCrearCorredor)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonCrearCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonVerCorredores)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addComponent(jButtonInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCrearCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCrearCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVerCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                    .addComponent(jButtonInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -277,6 +287,11 @@ public class MainPantallaPrincipalCorredor extends javax.swing.JFrame {
         VisualizadorCorredores visCorredores = new VisualizadorCorredores(this, true);
         visCorredores.setVisible(true);
     }//GEN-LAST:event_jButtonVerCorredoresActionPerformed
+
+    private void jButtonInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInformesActionPerformed
+       Informes informes=new Informes(this, true);
+       informes.setVisible(true);
+    }//GEN-LAST:event_jButtonInformesActionPerformed
     public void cargarLookAndFeel() {
         UIManager.installLookAndFeel(new UIManager.LookAndFeelInfo("Platano", "com.jtattoo.plaf.bernstein.BernsteinLookAndFeel"));
         UIManager.installLookAndFeel(new UIManager.LookAndFeelInfo("Aluminio", "com.jtattoo.plaf.aluminium.AluminiumLookAndFeel"));
@@ -334,6 +349,7 @@ public class MainPantallaPrincipalCorredor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCrearCarrera;
     private javax.swing.JButton jButtonCrearCorredor;
+    private javax.swing.JButton jButtonInformes;
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JButton jButtonVerCarreras;
     private javax.swing.JButton jButtonVerCorredores;
