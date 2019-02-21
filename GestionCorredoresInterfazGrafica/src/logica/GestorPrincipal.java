@@ -217,6 +217,22 @@ public class GestorPrincipal {
         carreras.put(c.getIdentificador(), c);
     }
 
+     public List<Carrera> devolverCarrerasNoFinalizadas() {
+    ArrayList<Carrera> array = new ArrayList(carreras.values());
+    ArrayList<Carrera> arrayAbiertas = new ArrayList();
+    
+    for (Carrera carrera : array) {
+    if (carrera.isAbierta()) {
+    
+    arrayAbiertas.add(carrera);
+    
+    }
+    }
+    
+    return arrayAbiertas;
+    
+    }
+
     public List<Carrera> devolverColeccionCarreras() {
         return new ArrayList(carreras.values());
     }

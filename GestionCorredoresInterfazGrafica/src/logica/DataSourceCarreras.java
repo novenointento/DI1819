@@ -7,6 +7,7 @@ package logica;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import modelo.Carrera;
 
@@ -16,10 +17,15 @@ import modelo.Carrera;
  */
 public class DataSourceCarreras {
         public static List<Carrera> listCarreras() {
-        List<Carrera> listaCoches = new ArrayList<>();
-                //logica.GestorPrincipal.getInstance().devolverColeccionCarreras();
+        List<Carrera> listaCarreras = new ArrayList<>();
+        
+            for (int i = 0; i <20; i++) {
+                listaCarreras.add(new Carrera("carrera "+i,"aviles","id "+i,new Date(),i));
+                
+            }
+            
         
             
-        return listaCoches;
+        return listaCarreras;
     }
 }

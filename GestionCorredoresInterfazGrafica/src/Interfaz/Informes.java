@@ -7,7 +7,9 @@ package Interfaz;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -16,12 +18,23 @@ import logica.GestorPrincipal;
 import logica.TableModelCarrera;
 import logica.TableModelCorredor;
 import modelo.Carrera;
+import modelo.Corredor;
+import modelo.CorredorCarrera;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.openide.util.Exceptions;
 
 /**
  *
  * @author daniel
  */
 public class Informes extends javax.swing.JDialog {
+
+    private int filaCarreraSeleccionada = -1;
 
     /**
      * Creates new form Informes
@@ -54,13 +67,13 @@ public class Informes extends javax.swing.JDialog {
         jTableCarreras.setModel(new TableModelCarrera(GestorPrincipal.getInstance().devolverColeccionCarreras()));
 
     }
-    
-      public void rellenarTableCorredores() {
+
+    public void rellenarTableCorredores() {
 
         TableModelCorredor tbm = new TableModelCorredor(GestorPrincipal.getInstance().devolverColeccionCorredores());
         jTableCorredores.setModel(tbm);
         TableRowSorter<TableModelCorredor> sorter = new TableRowSorter<>(tbm);
-       jTableCorredores.setRowSorter(sorter);
+        jTableCorredores.setRowSorter(sorter);
         List<RowSorter.SortKey> sortkeys = new ArrayList<>();
         sortkeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortkeys);
@@ -124,7 +137,7 @@ public class Informes extends javax.swing.JDialog {
         jButtonEliminarCarrera1.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jButtonEliminarCarrera1.text")); // NOI18N
         jButtonEliminarCarrera1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarCarrera1ActionPerformed(evt);
+                jButtonInforme(evt);
             }
         });
 
@@ -142,19 +155,9 @@ public class Informes extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTableCarreras1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableCarreras1MouseClicked(evt);
-            }
-        });
         jScrollPane3.setViewportView(jTableCarreras1);
 
         jButtonClasificacion.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jButtonClasificacion.text")); // NOI18N
-        jButtonClasificacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonClasificacionActionPerformed(evt);
-            }
-        });
 
         jLabelTituloCarreras2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabelTituloCarreras2.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jLabelTituloCarreras2.text")); // NOI18N
@@ -170,19 +173,9 @@ public class Informes extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTableCorredores.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableCorredoresMouseClicked(evt);
-            }
-        });
         jScrollPane4.setViewportView(jTableCorredores);
 
         jButtonEliminarCarrera3.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jButtonEliminarCarrera3.text")); // NOI18N
-        jButtonEliminarCarrera3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarCarrera3ActionPerformed(evt);
-            }
-        });
 
         jLabelTituloCarreras3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabelTituloCarreras3.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jLabelTituloCarreras3.text")); // NOI18N
@@ -253,37 +246,65 @@ public class Informes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonInforme1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInforme1ActionPerformed
-       JFileChooser selector = new JFileChooser();
-       
-        File selectedFile = selector.getSelectedFile();
-        System.out.println(selectedFile.toString());
+        try {
+            JFileChooser selector = new JFileChooser();
+            File selectedFile = selector.getSelectedFile();
+
+            List<Carrera> listaCarrerasAbiertas = GestorPrincipal.getInstance().devolverCarrerasNoFinalizadas();
+
+            //La encapsulamos en el objeto adecuado
+            JRDataSource dataSource = new JRBeanCollectionDataSource(listaCarrerasAbiertas);
+
+            //Creamos el map para los parámetros, en este caso va vacío.
+            Map parametros = new HashMap();
+
+            JasperPrint print = JasperFillManager.fillReport("Informes/InformeCarrerasSinFinalizar.jasper", parametros, dataSource);
+            JasperExportManager.exportReportToPdfFile(print, "Informes/informeCarrerasSinFinalizar.pdf");
+        } catch (JRException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+
     }//GEN-LAST:event_jButtonInforme1ActionPerformed
 
     private void jTableCarrerasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCarrerasMouseClicked
 
     }//GEN-LAST:event_jTableCarrerasMouseClicked
 
-    private void jButtonEliminarCarrera1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCarrera1ActionPerformed
+    private void jButtonInforme(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInforme
+        filaCarreraSeleccionada = jTableCarreras.getSelectedRow();
+        Carrera carrera;
+        ArrayList<CorredorCarrera> corredores;
+        if (filaCarreraSeleccionada >= 0) {
+            try {
+                carrera = carreraSeleccionada();
+                corredores = (ArrayList) carrera.getCorredores();
+
+                Map parametros = new HashMap();
+
+                parametros.put("nombre", carrera.getNombre());
+
+                parametros.put("lugar", carrera.getLugar());
+
+                String estado = (carrera.isAbierta()) ? "abierta" : "cerrada";
+                parametros.put("estado", estado);
+                JRDataSource dataSource = new JRBeanCollectionDataSource(corredores);
+                JasperPrint print = JasperFillManager.fillReport("Informes/informeCorredoresDeUnaCarrera.jasper", parametros, dataSource);
+                JasperExportManager.exportReportToPdfFile(print, "Informes/informeCorredoresDeUnaCarrera.pdf");
+            } catch (JRException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
 
 
-    }//GEN-LAST:event_jButtonEliminarCarrera1ActionPerformed
+    }//GEN-LAST:event_jButtonInforme
+    public Carrera carreraSeleccionada() {
+        Carrera carrera = null;
+        if (filaCarreraSeleccionada >= 0) {
+            carrera = GestorPrincipal.getInstance().devolverColeccionCarreras().get(filaCarreraSeleccionada);
+        }
 
-    private void jTableCarreras1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCarreras1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableCarreras1MouseClicked
-
-    private void jButtonClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClasificacionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonClasificacionActionPerformed
-
-    private void jTableCorredoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCorredoresMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableCorredoresMouseClicked
-
-    private void jButtonEliminarCarrera3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCarrera3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEliminarCarrera3ActionPerformed
-
+        return carrera;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClasificacion;

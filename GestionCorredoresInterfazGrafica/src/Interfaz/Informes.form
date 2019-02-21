@@ -147,7 +147,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEliminarCarrera1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonInforme"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelTituloCarreras1">
@@ -178,9 +178,6 @@
               </Table>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableCarreras1MouseClicked"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -190,9 +187,6 @@
           <ResourceString bundle="Interfaz/Bundle.properties" key="Informes.jButtonClasificacion.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonClasificacionActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelTituloCarreras2">
       <Properties>
@@ -222,9 +216,6 @@
               </Table>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableCorredoresMouseClicked"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -234,9 +225,6 @@
           <ResourceString bundle="Interfaz/Bundle.properties" key="Informes.jButtonEliminarCarrera3.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEliminarCarrera3ActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelTituloCarreras3">
       <Properties>

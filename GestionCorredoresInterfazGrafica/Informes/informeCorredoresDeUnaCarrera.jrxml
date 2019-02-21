@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="informeCorredoresDeUnaCarrera" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="92d1c289-ec77-4035-ad73-20aa4f86c7a6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="lugar" class="java.lang.String"/>
+	<parameter name="estado" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="tiempoString" class="java.lang.String">
+		<fieldDescription><![CDATA[tiempoString]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[nombre]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.lang.String">
+		<fieldDescription><![CDATA[fecha]]></fieldDescription>
+	</field>
+	<field name="dorsal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[dorsal]]></fieldDescription>
+	</field>
+	<field name="dni" class="java.lang.String">
+		<fieldDescription><![CDATA[dni]]></fieldDescription>
+	</field>
+	<field name="apellidos" class="java.lang.String">
+		<fieldDescription><![CDATA[apellidos]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="79" uuid="59a8fe3a-2f1a-41f8-a287-91103c36d756"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="59" width="100" height="20" uuid="7c9b584a-6d5b-4f7f-a77d-1525e77129c2"/>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="58" width="100" height="20" uuid="b7450b87-3f04-48b6-8cf3-28c61afc2933"/>
+				<textFieldExpression><![CDATA[$P{lugar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="59" width="100" height="20" uuid="3d48f042-4f22-4c20-b60d-2f4a0fc25bc5"/>
+				<textFieldExpression><![CDATA[$P{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="2" width="100" height="20" uuid="f0e7e11a-0e60-4433-bdf7-d08b913e463b"/>
+				<text><![CDATA[nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="2" width="100" height="20" uuid="bad2f0c1-8aa5-4176-8894-bac3ade6c429"/>
+				<text><![CDATA[apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="2" width="100" height="20" uuid="53f8cd43-7861-430d-b2d0-6d13ee524d6e"/>
+				<text><![CDATA[dni]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="2" width="100" height="20" uuid="007fba8a-bda2-4901-a1e7-cb5e57f269d1"/>
+				<text><![CDATA[tiempoString]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="2" width="100" height="20" uuid="05c5818f-5464-4ed5-a608-49ffc26484af"/>
+				<text><![CDATA[dorsal]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="11" y="10" width="100" height="20" uuid="3d812035-6bce-46f7-b122-f230e161eddb"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="111" y="10" width="100" height="20" uuid="d5697ed1-ad2e-4f9c-82b0-e331caa63f0f"/>
+				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="211" y="10" width="100" height="20" uuid="d27da376-c6af-41a3-ac3f-e0246d27c54b"/>
+				<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="10" width="100" height="20" uuid="a9e9f933-dd3e-4982-b230-87326d052056"/>
+				<textFieldExpression><![CDATA[$F{tiempoString}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="10" width="100" height="20" uuid="ceba3ba9-bfa5-46f1-9f6e-4e3cab6d7d95"/>
+				<textFieldExpression><![CDATA[$F{dorsal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
