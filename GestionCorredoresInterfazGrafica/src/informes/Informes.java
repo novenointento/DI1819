@@ -158,6 +158,11 @@ public class Informes extends javax.swing.JDialog {
         jScrollPane3.setViewportView(jTableCarreras1);
 
         jButtonClasificacion.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jButtonClasificacion.text")); // NOI18N
+        jButtonClasificacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClasificacionActionPerformed(evt);
+            }
+        });
 
         jLabelTituloCarreras2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabelTituloCarreras2.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jLabelTituloCarreras2.text")); // NOI18N
@@ -294,7 +299,7 @@ public class Informes extends javax.swing.JDialog {
         filaCarreraSeleccionada = jTableCarreras.getSelectedRow();
         Carrera carrera;
         
-        ArrayList<CorredorInformeCarrera> corredoresInformes = null;
+        ArrayList<CorredorInformeCarrera> corredoresInformes = new ArrayList<>();
         if (filaCarreraSeleccionada >= 0) {
             try {
                 carrera = carreraSeleccionada();
@@ -336,6 +341,47 @@ public class Informes extends javax.swing.JDialog {
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
       this.setVisible(false);
     }//GEN-LAST:event_jButtonSalirActionPerformed
+
+    private void jButtonClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClasificacionActionPerformed
+       filaCarreraSeleccionada = jTableCarreras1.getSelectedRow();
+        Carrera carrera;
+        
+        ArrayList<CorredorInformeCarrera> corredoresInformes = new ArrayList<>();
+        if (filaCarreraSeleccionada >= 0) {
+            try {
+                carrera = carreraSeleccionada();
+                carrera.getCorredores();
+                for (CorredorCarrera corredor : carrera.getCorredores()) {
+                    
+                    CorredorInformeCarrera corredorI=new CorredorInformeCarrera();
+                    corredorI.setApellidos(corredor.getCorredor().getApellidos());
+                    corredorI.setDireccion(corredor.getCorredor().getDireccion());
+                    corredorI.setDni(corredor.getCorredor().getDni());
+                    corredorI.setNombre(corredor.getCorredor().getNombre());
+                    corredorI.setDorsal(corredor.getDorsal());
+                    corredorI.setFechaNacimiento(corredor.getCorredor().getFechaNacimiento());
+                    corredorI.setTiempo(corredor.getTiempo());
+                    corredoresInformes.add(corredorI);
+                }
+                
+                
+                
+                Map parametros = new HashMap();
+
+                parametros.put("nombre", carrera.getNombre());
+
+                parametros.put("lugar", carrera.getLugar());
+
+              
+                parametros.put("estado", carrera.getEstado());
+                JRDataSource dataSource = new JRBeanCollectionDataSource(corredoresInformes);
+                JasperPrint print = JasperFillManager.fillReport("Informes/informeClasificacion.jasper", parametros, dataSource);
+                JasperExportManager.exportReportToPdfFile(print, "Informes/informeClasificacion.pdf");
+            } catch (JRException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonClasificacionActionPerformed
     public Carrera carreraSeleccionada() {
         Carrera carrera = null;
         if (filaCarreraSeleccionada >= 0) {

@@ -7,7 +7,7 @@ package informes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import modelo.Corredor;
+
 
 /**
  *
@@ -22,6 +22,23 @@ public class CorredorInformeCarrera {
     private int dorsal;
     private Date tiempo;
     private String fecha;
+    private String tiempoString;
+
+    public String getTiempoString() {
+        return tiempoString;
+    }
+
+    public void setTiempoString(String tiempoString) {
+        this.tiempoString = tiempoString;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
     
 
     public String getNombre() {
@@ -79,6 +96,7 @@ public class CorredorInformeCarrera {
 
     public void setTiempo(Date tiempo) {
         this.tiempo = tiempo;
+         tiempoString = (new SimpleDateFormat("\"mm:ss:SSS\"")).format(tiempo);
     }
     
     
