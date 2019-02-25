@@ -18,6 +18,9 @@
 	<field name="lugar" class="java.lang.String">
 		<fieldDescription><![CDATA[lugar]]></fieldDescription>
 	</field>
+	<field name="estado" class="java.lang.String">
+		<fieldDescription><![CDATA[estado]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -36,34 +39,30 @@
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="32" splitType="Stretch">
 			<staticText>
 				<reportElement x="11" y="2" width="100" height="20" uuid="f663d970-e600-4279-b0b5-3bba1afe7c7c"/>
-				<text><![CDATA[nombre]]></text>
+				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="136" y="2" width="100" height="20" uuid="aa2bf0c3-2c48-4a3e-bf01-4a843155acff"/>
-				<text><![CDATA[abierta]]></text>
+				<text><![CDATA[Estado:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="314" y="2" width="100" height="20" uuid="5622c492-dc05-464b-9fdf-2643e4701db7"/>
-				<text><![CDATA[lugar]]></text>
+				<text><![CDATA[Lugar:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="434" y="2" width="100" height="20" uuid="da359bb7-7e59-4c63-a627-322b7e9a98be"/>
-				<text><![CDATA[participantesApuntados]]></text>
+				<text><![CDATA[Nº participantes]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="1" width="100" height="20" uuid="fbeca22e-262d-494d-a900-5f9e94b3bf0f"/>
+				<reportElement x="11" y="0" width="100" height="20" uuid="fbeca22e-262d-494d-a900-5f9e94b3bf0f"/>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="136" y="1" width="100" height="20" uuid="c995fb15-3fd6-4112-82e4-0bda58ebe4e6"/>
-				<textFieldExpression><![CDATA[$F{abierta}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="314" y="1" width="100" height="20" uuid="65afed7f-7c55-447c-bc33-f183e87162a0"/>
@@ -72,6 +71,10 @@
 			<textField>
 				<reportElement x="434" y="1" width="100" height="20" uuid="8df42626-4fcc-4be9-b1b5-e50a7bbcf4c9"/>
 				<textFieldExpression><![CDATA[$F{participantesApuntados}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="136" y="1" width="100" height="20" uuid="a11f0c11-160b-4fbc-93d4-598fd47fbf79"/>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

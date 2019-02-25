@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interfaz;
+package informes;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ import logica.GestorPrincipal;
 import logica.TableModelCarrera;
 import logica.TableModelCorredor;
 import modelo.Carrera;
-import modelo.Corredor;
 import modelo.CorredorCarrera;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -101,8 +100,9 @@ public class Informes extends javax.swing.JDialog {
         jLabelTituloCarreras2 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableCorredores = new javax.swing.JTable();
-        jButtonEliminarCarrera3 = new javax.swing.JButton();
+        jButtonSalir = new javax.swing.JButton();
         jLabelTituloCarreras3 = new javax.swing.JLabel();
+        jButtonEliminarCarrera4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -175,10 +175,17 @@ public class Informes extends javax.swing.JDialog {
         ));
         jScrollPane4.setViewportView(jTableCorredores);
 
-        jButtonEliminarCarrera3.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jButtonEliminarCarrera3.text")); // NOI18N
+        jButtonSalir.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jButtonSalir.text")); // NOI18N
+        jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalirActionPerformed(evt);
+            }
+        });
 
         jLabelTituloCarreras3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabelTituloCarreras3.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jLabelTituloCarreras3.text")); // NOI18N
+
+        jButtonEliminarCarrera4.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jButtonEliminarCarrera4.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -210,9 +217,17 @@ public class Informes extends javax.swing.JDialog {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jButtonEliminarCarrera1)
-                                    .addComponent(jButtonClasificacion)
-                                    .addComponent(jButtonEliminarCarrera3))))
+                                    .addComponent(jButtonClasificacion))))
                         .addContainerGap(12, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonSalir)
+                .addGap(168, 168, 168))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(764, Short.MAX_VALUE)
+                    .addComponent(jButtonEliminarCarrera4)
+                    .addGap(2, 2, 2)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,8 +253,13 @@ public class Informes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonEliminarCarrera3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(7, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(936, Short.MAX_VALUE)
+                    .addComponent(jButtonEliminarCarrera4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
         pack();
@@ -273,21 +293,36 @@ public class Informes extends javax.swing.JDialog {
     private void jButtonInforme(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInforme
         filaCarreraSeleccionada = jTableCarreras.getSelectedRow();
         Carrera carrera;
-        ArrayList<CorredorCarrera> corredores;
+        
+        ArrayList<CorredorInformeCarrera> corredoresInformes = null;
         if (filaCarreraSeleccionada >= 0) {
             try {
                 carrera = carreraSeleccionada();
-                corredores = (ArrayList) carrera.getCorredores();
-
+                carrera.getCorredores();
+                for (CorredorCarrera corredor : carrera.getCorredores()) {
+                    
+                    CorredorInformeCarrera corredorI=new CorredorInformeCarrera();
+                    corredorI.setApellidos(corredor.getCorredor().getApellidos());
+                    corredorI.setDireccion(corredor.getCorredor().getDireccion());
+                    corredorI.setDni(corredor.getCorredor().getDni());
+                    corredorI.setNombre(corredor.getCorredor().getNombre());
+                    corredorI.setDorsal(corredor.getDorsal());
+                    corredorI.setFechaNacimiento(corredor.getCorredor().getFechaNacimiento());
+                    corredorI.setTiempo(corredor.getTiempo());
+                    corredoresInformes.add(corredorI);
+                }
+                
+                
+                
                 Map parametros = new HashMap();
 
                 parametros.put("nombre", carrera.getNombre());
 
                 parametros.put("lugar", carrera.getLugar());
 
-                String estado = (carrera.isAbierta()) ? "abierta" : "cerrada";
-                parametros.put("estado", estado);
-                JRDataSource dataSource = new JRBeanCollectionDataSource(corredores);
+              
+                parametros.put("estado", carrera.getEstado());
+                JRDataSource dataSource = new JRBeanCollectionDataSource(corredoresInformes);
                 JasperPrint print = JasperFillManager.fillReport("Informes/informeCorredoresDeUnaCarrera.jasper", parametros, dataSource);
                 JasperExportManager.exportReportToPdfFile(print, "Informes/informeCorredoresDeUnaCarrera.pdf");
             } catch (JRException ex) {
@@ -297,6 +332,10 @@ public class Informes extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_jButtonInforme
+
+    private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
+      this.setVisible(false);
+    }//GEN-LAST:event_jButtonSalirActionPerformed
     public Carrera carreraSeleccionada() {
         Carrera carrera = null;
         if (filaCarreraSeleccionada >= 0) {
@@ -309,8 +348,9 @@ public class Informes extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClasificacion;
     private javax.swing.JButton jButtonEliminarCarrera1;
-    private javax.swing.JButton jButtonEliminarCarrera3;
+    private javax.swing.JButton jButtonEliminarCarrera4;
     private javax.swing.JButton jButtonInforme1;
+    private javax.swing.JButton jButtonSalir;
     private javax.swing.JLabel jLabelTituloCarreras;
     private javax.swing.JLabel jLabelTituloCarreras1;
     private javax.swing.JLabel jLabelTituloCarreras2;

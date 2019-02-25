@@ -24,6 +24,7 @@ public class Carrera implements Serializable{
     private boolean abierta;
     private List<Integer> dorsales;
     private int participantesApuntados;
+    private String estado;
   
 
     public Carrera( String nombre, String lugar,String identificador,Date fecha,int participantes) {
@@ -36,8 +37,19 @@ public class Carrera implements Serializable{
         this.participantesApuntados=0;
         this.abierta=true;
         this.dorsales=new ArrayList<Integer>();
+        this.estado="Abierta";
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    
+    
     public int getParticipantesApuntados() {
         participantesApuntados=this.corredores.size();
         return participantesApuntados;
@@ -62,6 +74,11 @@ public class Carrera implements Serializable{
 
     public void setAbierta(boolean abierta) {
         this.abierta = abierta;
+        if(abierta){
+            estado="Abierta";
+        }else{
+            estado="Cerrada";
+        }
     }
 
     public String getIdentificador() {
