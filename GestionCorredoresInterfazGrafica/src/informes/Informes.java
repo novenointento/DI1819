@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
@@ -18,6 +19,7 @@ import logica.GestorPrincipal;
 import logica.TableModelCarrera;
 import logica.TableModelCorredor;
 import modelo.Carrera;
+import modelo.Corredor;
 import modelo.CorredorCarrera;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -34,6 +36,7 @@ import org.openide.util.Exceptions;
 public class Informes extends javax.swing.JDialog {
 
     private int filaCarreraSeleccionada = -1;
+    private int filaCorredorSeleccionado= -1;
 
     /**
      * Creates new form Informes
@@ -191,6 +194,11 @@ public class Informes extends javax.swing.JDialog {
         jLabelTituloCarreras3.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jLabelTituloCarreras3.text")); // NOI18N
 
         jButtonEliminarCarrera4.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jButtonEliminarCarrera4.text")); // NOI18N
+        jButtonEliminarCarrera4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCorredoresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -285,6 +293,7 @@ public class Informes extends javax.swing.JDialog {
 
             JasperPrint print = JasperFillManager.fillReport("Informes/InformeCarrerasSinFinalizar.jasper", parametros, dataSource);
             JasperExportManager.exportReportToPdfFile(print, "Informes/informeCarrerasSinFinalizar.pdf");
+            JOptionPane.showMessageDialog(this, "Se ha generado un informe");
         } catch (JRException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -330,6 +339,7 @@ public class Informes extends javax.swing.JDialog {
                 JRDataSource dataSource = new JRBeanCollectionDataSource(corredoresInformes);
                 JasperPrint print = JasperFillManager.fillReport("Informes/informeCorredoresDeUnaCarrera.jasper", parametros, dataSource);
                 JasperExportManager.exportReportToPdfFile(print, "Informes/informeCorredoresDeUnaCarrera.pdf");
+                 JOptionPane.showMessageDialog(this, "Se ha generado un informe");
             } catch (JRException ex) {
                 Exceptions.printStackTrace(ex);
             }
@@ -341,7 +351,8 @@ public class Informes extends javax.swing.JDialog {
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
       this.setVisible(false);
     }//GEN-LAST:event_jButtonSalirActionPerformed
-
+ 
+    
     private void jButtonClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClasificacionActionPerformed
        filaCarreraSeleccionada = jTableCarreras1.getSelectedRow();
         Carrera carrera;
@@ -377,11 +388,60 @@ public class Informes extends javax.swing.JDialog {
                 JRDataSource dataSource = new JRBeanCollectionDataSource(corredoresInformes);
                 JasperPrint print = JasperFillManager.fillReport("Informes/informeClasificacion.jasper", parametros, dataSource);
                 JasperExportManager.exportReportToPdfFile(print, "Informes/informeClasificacion.pdf");
+                 JOptionPane.showMessageDialog(this, "Se ha generado un informe");
             } catch (JRException ex) {
                 Exceptions.printStackTrace(ex);
             }
         }
     }//GEN-LAST:event_jButtonClasificacionActionPerformed
+
+    private void jButtonCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCorredoresActionPerformed
+      filaCorredorSeleccionado=jTableCorredores.getSelectedRow();
+        CorredorCarrera corredor;
+      
+        if (filaCorredorSeleccionado>=0){
+        
+          try {
+              corredor=new CorredorCarrera(GestorPrincipal.getInstance().devolverColeccionCorredores().get(filaCorredorSeleccionado),1);
+              List<Carrera> carrerasParticipa=new ArrayList<Carrera>();
+              List<Carrera> carreras = GestorPrincipal.getInstance().devolverColeccionCarreras();
+              for (Carrera carrera : carreras) {
+               
+                  if(carrera.getCorredores().contains(corredor)){
+                      
+                      carrerasParticipa.add(carrera);
+                  }
+              }
+              
+              Map parametros = new HashMap();
+              
+              parametros.put("nombre", corredor.getCorredor().getNombre());
+              
+              parametros.put("dni", corredor.getCorredor().getDni());
+              
+              
+              parametros.put("apellidos", corredor.getCorredor().getApellidos());
+              
+              JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasParticipa);
+              JasperPrint print = JasperFillManager.fillReport("Informes/informeCorredorConCarreras.jasper", parametros, dataSource);
+              JasperExportManager.exportReportToPdfFile(print, "Informes/informeCorredorConCarreras.pdf");
+              JOptionPane.showMessageDialog(this, "Se ha generado un informe");
+          } catch (JRException ex) {
+              Exceptions.printStackTrace(ex);
+          }
+            
+            
+            
+        
+        }
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jButtonCorredoresActionPerformed
     public Carrera carreraSeleccionada() {
         Carrera carrera = null;
         if (filaCarreraSeleccionada >= 0) {
