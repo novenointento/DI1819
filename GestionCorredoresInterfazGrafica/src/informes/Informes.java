@@ -36,7 +36,7 @@ import org.openide.util.Exceptions;
 public class Informes extends javax.swing.JDialog {
 
     private int filaCarreraSeleccionada = -1;
-    private int filaCorredorSeleccionado= -1;
+    private int filaCorredorSeleccionado = -1;
 
     /**
      * Creates new form Informes
@@ -307,15 +307,15 @@ public class Informes extends javax.swing.JDialog {
     private void jButtonInforme(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInforme
         filaCarreraSeleccionada = jTableCarreras.getSelectedRow();
         Carrera carrera;
-        
+
         ArrayList<CorredorInformeCarrera> corredoresInformes = new ArrayList<>();
         if (filaCarreraSeleccionada >= 0) {
             try {
                 carrera = carreraSeleccionada();
                 carrera.getCorredores();
                 for (CorredorCarrera corredor : carrera.getCorredores()) {
-                    
-                    CorredorInformeCarrera corredorI=new CorredorInformeCarrera();
+
+                    CorredorInformeCarrera corredorI = new CorredorInformeCarrera();
                     corredorI.setApellidos(corredor.getCorredor().getApellidos());
                     corredorI.setDireccion(corredor.getCorredor().getDireccion());
                     corredorI.setDni(corredor.getCorredor().getDni());
@@ -325,21 +325,18 @@ public class Informes extends javax.swing.JDialog {
                     corredorI.setTiempo(corredor.getTiempo());
                     corredoresInformes.add(corredorI);
                 }
-                
-                
-                
+
                 Map parametros = new HashMap();
 
                 parametros.put("nombre", carrera.getNombre());
 
                 parametros.put("lugar", carrera.getLugar());
 
-              
                 parametros.put("estado", carrera.getEstado());
                 JRDataSource dataSource = new JRBeanCollectionDataSource(corredoresInformes);
                 JasperPrint print = JasperFillManager.fillReport("Informes/informeCorredoresDeUnaCarrera.jasper", parametros, dataSource);
                 JasperExportManager.exportReportToPdfFile(print, "Informes/informeCorredoresDeUnaCarrera.pdf");
-                 JOptionPane.showMessageDialog(this, "Se ha generado un informe");
+                JOptionPane.showMessageDialog(this, "Se ha generado un informe");
             } catch (JRException ex) {
                 Exceptions.printStackTrace(ex);
             }
@@ -349,22 +346,22 @@ public class Informes extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonInforme
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
-      this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jButtonSalirActionPerformed
- 
-    
+
+
     private void jButtonClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClasificacionActionPerformed
-       filaCarreraSeleccionada = jTableCarreras1.getSelectedRow();
+        filaCarreraSeleccionada = jTableCarreras1.getSelectedRow();
         Carrera carrera;
-        
+
         ArrayList<CorredorInformeCarrera> corredoresInformes = new ArrayList<>();
         if (filaCarreraSeleccionada >= 0) {
             try {
                 carrera = carreraSeleccionada();
                 carrera.getCorredores();
                 for (CorredorCarrera corredor : carrera.getCorredores()) {
-                    
-                    CorredorInformeCarrera corredorI=new CorredorInformeCarrera();
+
+                    CorredorInformeCarrera corredorI = new CorredorInformeCarrera();
                     corredorI.setApellidos(corredor.getCorredor().getApellidos());
                     corredorI.setDireccion(corredor.getCorredor().getDireccion());
                     corredorI.setDni(corredor.getCorredor().getDni());
@@ -374,21 +371,18 @@ public class Informes extends javax.swing.JDialog {
                     corredorI.setTiempo(corredor.getTiempo());
                     corredoresInformes.add(corredorI);
                 }
-                
-                
-                
+
                 Map parametros = new HashMap();
 
                 parametros.put("nombre", carrera.getNombre());
 
                 parametros.put("lugar", carrera.getLugar());
 
-              
                 parametros.put("estado", carrera.getEstado());
                 JRDataSource dataSource = new JRBeanCollectionDataSource(corredoresInformes);
                 JasperPrint print = JasperFillManager.fillReport("Informes/informeClasificacion.jasper", parametros, dataSource);
                 JasperExportManager.exportReportToPdfFile(print, "Informes/informeClasificacion.pdf");
-                 JOptionPane.showMessageDialog(this, "Se ha generado un informe");
+                JOptionPane.showMessageDialog(this, "Se ha generado un informe");
             } catch (JRException ex) {
                 Exceptions.printStackTrace(ex);
             }
@@ -396,51 +390,46 @@ public class Informes extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonClasificacionActionPerformed
 
     private void jButtonCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCorredoresActionPerformed
-      filaCorredorSeleccionado=jTableCorredores.getSelectedRow();
-        CorredorCarrera corredor;
-      
-        if (filaCorredorSeleccionado>=0){
-        
-          try {
-              corredor=new CorredorCarrera(GestorPrincipal.getInstance().devolverColeccionCorredores().get(filaCorredorSeleccionado),1);
-              List<Carrera> carrerasParticipa=new ArrayList<Carrera>();
-              List<Carrera> carreras = GestorPrincipal.getInstance().devolverColeccionCarreras();
-              for (Carrera carrera : carreras) {
-               
-                  if(carrera.getCorredores().contains(corredor)){
-                      
-                      carrerasParticipa.add(carrera);
-                  }
-              }
-              
-              Map parametros = new HashMap();
-              
-              parametros.put("nombre", corredor.getCorredor().getNombre());
-              
-              parametros.put("dni", corredor.getCorredor().getDni());
-              
-              
-              parametros.put("apellidos", corredor.getCorredor().getApellidos());
-              
-              JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasParticipa);
-              JasperPrint print = JasperFillManager.fillReport("Informes/informeCorredorConCarreras.jasper", parametros, dataSource);
-              JasperExportManager.exportReportToPdfFile(print, "Informes/informeCorredorConCarreras.pdf");
-              JOptionPane.showMessageDialog(this, "Se ha generado un informe");
-          } catch (JRException ex) {
-              Exceptions.printStackTrace(ex);
-          }
-            
-            
-            
-        
+        filaCorredorSeleccionado = jTableCorredores.getSelectedRow();
+        Corredor corredor;
+
+        if (filaCorredorSeleccionado >= 0) {
+
+            try {
+                corredor = GestorPrincipal.getInstance().devolverColeccionCorredores().get(filaCorredorSeleccionado);
+                List<Carrera> carrerasParticipa = new ArrayList<Carrera>();
+                List<Carrera> carreras = GestorPrincipal.getInstance().devolverColeccionCarreras();
+                for (Carrera carrera : carreras) {
+
+                    List<CorredorCarrera> corredores = carrera.getCorredores();
+                    for (CorredorCarrera corredore : corredores) {
+                        if (corredore.getCorredor().equals(corredor)) {
+                            System.out.println(carrera.toString());
+                            carrerasParticipa.add(carrera);
+                        }
+                    }
+
+                }
+
+                Map parametros = new HashMap();
+
+                parametros.put("nombre", corredor.getNombre());
+
+                parametros.put("dni", corredor.getDni());
+
+                parametros.put("apellidos", corredor.getApellidos());
+
+                JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasParticipa);
+                JasperPrint print = JasperFillManager.fillReport("Informes/informeCorredorConCarreras.jasper", parametros, dataSource);
+                JasperExportManager.exportReportToPdfFile(print, "Informes/informeCorredorConCarreras.pdf");
+                JOptionPane.showMessageDialog(this, "Se ha generado un informe");
+            } catch (JRException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+
         }
-        
-        
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jButtonCorredoresActionPerformed
     public Carrera carreraSeleccionada() {
         Carrera carrera = null;
