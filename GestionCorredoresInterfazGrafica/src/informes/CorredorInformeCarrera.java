@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author daniel
  */
-public class CorredorInformeCarrera {
+public class CorredorInformeCarrera implements Comparable<CorredorInformeCarrera> {
     private String nombre;
     private String apellidos;
     private Date fechaNacimiento;
@@ -98,11 +98,17 @@ public class CorredorInformeCarrera {
         this.tiempo = tiempo;
          tiempoString = (new SimpleDateFormat("\"mm:ss:SSS\"")).format(tiempo);
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public int compareTo(CorredorInformeCarrera o) {
+       if (tiempo.after(o.tiempo)) {
+                return -1;
+            }
+            if (tiempo.before(o.tiempo)) {
+                return 1;
+            }
+            return 0;
+    }
     
     
 }

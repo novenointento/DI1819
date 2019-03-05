@@ -38,16 +38,16 @@
 	<pageHeader>
 		<band height="35" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="5da41d3e-c9d6-4ea4-9af7-16d85376cd57"/>
+				<reportElement x="0" y="0" width="152" height="20" uuid="5da41d3e-c9d6-4ea4-9af7-16d85376cd57"/>
 				<textElement>
-					<font size="14"/>
+					<font size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="455" y="0" width="100" height="20" uuid="19fea443-d9f5-48e7-ab39-50fe7e2fb5fb"/>
+				<reportElement x="436" y="0" width="100" height="20" uuid="19fea443-d9f5-48e7-ab39-50fe7e2fb5fb"/>
 				<textElement>
-					<font size="14"/>
+					<font size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{lugar}]]></textFieldExpression>
 			</textField>

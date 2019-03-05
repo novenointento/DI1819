@@ -7,6 +7,8 @@ package informes;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +39,7 @@ public class Informes extends javax.swing.JDialog {
 
     private int filaCarreraSeleccionada = -1;
     private int filaCorredorSeleccionado = -1;
-
+    private List<Carrera> acabadas;
     /**
      * Creates new form Informes
      */
@@ -51,7 +53,7 @@ public class Informes extends javax.swing.JDialog {
 
     public void rellenarTableAcabadas() {
         List<Carrera> listaAcabadas = GestorPrincipal.getInstance().devolverColeccionCarreras();
-        List<Carrera> acabadas = new ArrayList();
+      acabadas = new ArrayList();
 
         for (Carrera carrera : listaAcabadas) {
             if (!carrera.isAbierta()) {
@@ -130,11 +132,6 @@ public class Informes extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTableCarreras.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableCarrerasMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(jTableCarreras);
 
         jButtonEliminarCarrera1.setText(org.openide.util.NbBundle.getMessage(Informes.class, "Informes.jButtonEliminarCarrera1.text")); // NOI18N
@@ -280,8 +277,6 @@ public class Informes extends javax.swing.JDialog {
 
     private void jButtonInforme1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInforme1ActionPerformed
         try {
-            JFileChooser selector = new JFileChooser();
-            File selectedFile = selector.getSelectedFile();
 
             List<Carrera> listaCarrerasAbiertas = GestorPrincipal.getInstance().devolverCarrerasNoFinalizadas();
 
@@ -292,17 +287,21 @@ public class Informes extends javax.swing.JDialog {
             Map parametros = new HashMap();
 
             JasperPrint print = JasperFillManager.fillReport("Informes/InformeCarrerasSinFinalizar.jasper", parametros, dataSource);
-            JasperExportManager.exportReportToPdfFile(print, "Informes/informeCarrerasSinFinalizar.pdf");
+            JasperExportManager.exportReportToPdfFile(print,seleccionGuardado());
             JOptionPane.showMessageDialog(this, "Se ha generado un informe");
         } catch (JRException ex) {
             Exceptions.printStackTrace(ex);
         }
 
     }//GEN-LAST:event_jButtonInforme1ActionPerformed
+    private String seleccionGuardado() {
+        JFileChooser selector = new JFileChooser();
+        selector.showSaveDialog(this);
+        File selectedFile = selector.getSelectedFile();
 
-    private void jTableCarrerasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCarrerasMouseClicked
+        return selectedFile.getAbsolutePath();
 
-    }//GEN-LAST:event_jTableCarrerasMouseClicked
+    }
 
     private void jButtonInforme(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInforme
         filaCarreraSeleccionada = jTableCarreras.getSelectedRow();
@@ -313,6 +312,7 @@ public class Informes extends javax.swing.JDialog {
             try {
                 carrera = carreraSeleccionada();
                 carrera.getCorredores();
+                  System.out.println(carrera.getCorredores().size());
                 for (CorredorCarrera corredor : carrera.getCorredores()) {
 
                     CorredorInformeCarrera corredorI = new CorredorInformeCarrera();
@@ -322,10 +322,12 @@ public class Informes extends javax.swing.JDialog {
                     corredorI.setNombre(corredor.getCorredor().getNombre());
                     corredorI.setDorsal(corredor.getDorsal());
                     corredorI.setFechaNacimiento(corredor.getCorredor().getFechaNacimiento());
-                    corredorI.setTiempo(corredor.getTiempo());
+                    corredorI.setTiempo(new Date());
                     corredoresInformes.add(corredorI);
+                   
                 }
-
+              
+                
                 Map parametros = new HashMap();
 
                 parametros.put("nombre", carrera.getNombre());
@@ -335,7 +337,7 @@ public class Informes extends javax.swing.JDialog {
                 parametros.put("estado", carrera.getEstado());
                 JRDataSource dataSource = new JRBeanCollectionDataSource(corredoresInformes);
                 JasperPrint print = JasperFillManager.fillReport("Informes/informeCorredoresDeUnaCarrera.jasper", parametros, dataSource);
-                JasperExportManager.exportReportToPdfFile(print, "Informes/informeCorredoresDeUnaCarrera.pdf");
+                JasperExportManager.exportReportToPdfFile(print,seleccionGuardado());
                 JOptionPane.showMessageDialog(this, "Se ha generado un informe");
             } catch (JRException ex) {
                 Exceptions.printStackTrace(ex);
@@ -351,14 +353,15 @@ public class Informes extends javax.swing.JDialog {
 
 
     private void jButtonClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClasificacionActionPerformed
-        filaCarreraSeleccionada = jTableCarreras1.getSelectedRow();
+      filaCarreraSeleccionada = jTableCarreras1.getSelectedRow();
         Carrera carrera;
 
         ArrayList<CorredorInformeCarrera> corredoresInformes = new ArrayList<>();
         if (filaCarreraSeleccionada >= 0) {
             try {
-                carrera = carreraSeleccionada();
+                carrera = acabadas.get(filaCarreraSeleccionada);
                 carrera.getCorredores();
+                  System.out.println(carrera.getCorredores().size());
                 for (CorredorCarrera corredor : carrera.getCorredores()) {
 
                     CorredorInformeCarrera corredorI = new CorredorInformeCarrera();
@@ -370,6 +373,7 @@ public class Informes extends javax.swing.JDialog {
                     corredorI.setFechaNacimiento(corredor.getCorredor().getFechaNacimiento());
                     corredorI.setTiempo(corredor.getTiempo());
                     corredoresInformes.add(corredorI);
+                    
                 }
 
                 Map parametros = new HashMap();
@@ -381,7 +385,7 @@ public class Informes extends javax.swing.JDialog {
                 parametros.put("estado", carrera.getEstado());
                 JRDataSource dataSource = new JRBeanCollectionDataSource(corredoresInformes);
                 JasperPrint print = JasperFillManager.fillReport("Informes/informeClasificacion.jasper", parametros, dataSource);
-                JasperExportManager.exportReportToPdfFile(print, "Informes/informeClasificacion.pdf");
+                JasperExportManager.exportReportToPdfFile(print, seleccionGuardado());
                 JOptionPane.showMessageDialog(this, "Se ha generado un informe");
             } catch (JRException ex) {
                 Exceptions.printStackTrace(ex);
@@ -421,7 +425,7 @@ public class Informes extends javax.swing.JDialog {
 
                 JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasParticipa);
                 JasperPrint print = JasperFillManager.fillReport("Informes/informeCorredorConCarreras.jasper", parametros, dataSource);
-                JasperExportManager.exportReportToPdfFile(print, "Informes/informeCorredorConCarreras.pdf");
+                JasperExportManager.exportReportToPdfFile(print,seleccionGuardado());
                 JOptionPane.showMessageDialog(this, "Se ha generado un informe");
             } catch (JRException ex) {
                 Exceptions.printStackTrace(ex);
